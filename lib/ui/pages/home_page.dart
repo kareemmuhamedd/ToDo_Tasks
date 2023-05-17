@@ -141,20 +141,22 @@ class _HomePageState extends State<HomePage> {
                     notifyHelper.cancelAllNotification();
                     _taskController.deleteAllTask();
                     Get.back();
-                    Get.snackbar('All was deleted',
-                        'Done Successfully, Press Add Task button if you need to add new one',
-                        snackPosition: SnackPosition.BOTTOM,
-                        backgroundColor: Colors.red,
-                        colorText: Colors.white,
-                        icon: const Icon(
-                          Icons.delete_forever_outlined,
-                          color: Colors.red,
-                        ),
-                        duration: const Duration(seconds: 4),
-                        );
+                    Get.snackbar(
+                      'All was deleted',
+                      'Done Successfully, Press Add Task button if you need to add new one',
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: Colors.red,
+                      colorText: Colors.white,
+                      icon: const Icon(
+                        Icons.delete_forever_outlined,
+                        color: Colors.red,
+                      ),
+                      duration: const Duration(seconds: 4),
+                    );
                   },
                   content: const Text(
-                    '''Are you sure ? All tasks will be removed.''',textAlign: TextAlign.center,
+                    '''Are you sure ? All tasks will be removed.''',
+                    textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.black),
                   ));
             },
@@ -208,18 +210,19 @@ class _HomePageState extends State<HomePage> {
 
   /// function for refresh indicator
   Future<void> _onRefresh() async {
-    DateTime now=DateTime.now();
-    for(var i in _taskController.taskList){
-      DateTime date = DateFormat('M/d/yyyy').parse(i.date!);
-      if(date.isBefore(now)){
-        print('***********i am sorry***********');
-      }
-      else{
-        print('***********you have still time***********');
-      }
-    }
+    // DateTime now=DateTime.now();
+    // for(var i in _taskController.taskList){
+    //   DateTime date = DateFormat('M/d/yyyy').parse(i.date!);
+    //   if(date.isBefore(now)){
+    //     print('***********i am sorry***********');
+    //   }
+    //   else{
+    //     print('***********you have still time***********');
+    //   }
+    // }
 
     _taskController.getTask();
+    _showTask();
   }
 
   _showTask() {
@@ -241,7 +244,12 @@ class _HomePageState extends State<HomePage> {
                 if (task.repeat == 'Daily' ||
                     task.date == DateFormat.yMd().format(_selectedDate) ||
                     (task.repeat == 'Weekly' &&
-                        _selectedDate.difference(DateFormat.yMd().parse(task.date!),).inDays % 7 ==
+                        _selectedDate
+                                    .difference(
+                                      DateFormat.yMd().parse(task.date!),
+                                    )
+                                    .inDays %
+                                7 ==
                             0) ||
                     (task.repeat == 'Monthly' &&
                         DateFormat.yMd().parse(task.date!).day ==
@@ -273,6 +281,12 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   );
+                } else if (task.repeat == 'None') {
+                  Future.delayed(const Duration(days: 1), () {
+                    _taskController.deleteTask(task);
+                    NotifyHelper().cancelNotification(task);
+                  });
+                  return Container();
                 }
                 return Container();
               },
