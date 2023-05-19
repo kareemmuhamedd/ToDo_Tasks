@@ -7,6 +7,7 @@ import 'package:todo/ui/pages/notification_screen.dart';
 import 'package:get/get.dart';
 import 'package:todo/ui/theme.dart';
 
+import 'animation_splash_app.dart';
 import 'db/db_helper.dart';
 
 void main() async {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       darkTheme: Themes.darkTh,
       themeMode: ThemeServices().theme,
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: const StartScreenApp(),
     );
   }
 }

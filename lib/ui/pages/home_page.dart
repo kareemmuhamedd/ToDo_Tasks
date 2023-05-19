@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  
+
   /// function for refresh indicator
   Future<void> _onRefresh() async {
     _taskController.getTask();
@@ -251,7 +251,6 @@ class _HomePageState extends State<HomePage> {
                   NotifyHelper().checkDate(_selectedDate, task.id);
                   var date = DateFormat.jm().parse(task.startTime!);
                   var myTime = DateFormat('HH:mm').format(date);
-
                   NotifyHelper().scheduledNotification(
                     int.parse(myTime.toString().split(':')[0]),
                     int.parse(myTime.toString().split(':')[1]),
@@ -267,7 +266,11 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             showBottomSheet(context, task);
                           },
-                          child: TaskTile(task),
+                          child: TaskTile(
+                            task,
+                            selectedDate: _selectedDate,
+                            startTime: date,
+                          ),
                         ),
                       ),
                     ),
@@ -400,7 +403,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(height: 20),
-              task.isCompleted == 1
+              (task.isCompleted == 1)
                   ? Container()
                   : _buildBottomSheet(
                       label: 'Task Completed',

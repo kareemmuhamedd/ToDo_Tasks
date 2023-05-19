@@ -8,8 +8,12 @@ import '../pages/home_page.dart';
 import '../size_config.dart';
 
 class TaskTile extends StatelessWidget {
-  const TaskTile(this.task, {Key? key}) : super(key: key);
+  const TaskTile(this.task, {Key? key, required this.selectedDate,required this.startTime})
+      : super(key: key);
   final Task task;
+  final DateTime selectedDate;
+  final DateTime startTime;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +87,9 @@ class TaskTile extends StatelessWidget {
             RotatedBox(
               quarterTurns: 3,
               child: Text(
-                task.isCompleted == 0 ? 'TODO' : 'Completed',
+                (task.isCompleted == 0 &&selectedDate.isAfter(DateTime.now()))
+                    ? 'TODO'
+                    : 'Completed',
                 style: GoogleFonts.lato(
                   textStyle: const TextStyle(
                     fontSize: 10,
