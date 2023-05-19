@@ -93,4 +93,24 @@ class DBHelper {
 
         );
   }
+
+  static Future<int> updateTaskState(int id) async {
+    print('@@@###update task state is called');
+    return await _db!.rawUpdate('''
+    UPDATE $_tableName
+    SET isCompleted = ?
+    WHERE id = ?
+    ''', [0, id]
+
+      /// شرح جزء ال update عشان مهم
+      /// look why i put [1, id]
+      /// Because if i need to update state of task i will need to make it complete
+      /// so i need to put the value of isCompleted = 1
+      /// so in these order [1, id]
+      /// the first isCompleted will take 1
+      /// and the second id wil take id because i need to update instead of the id whose i will receive
+
+    );
+  }
+
 }

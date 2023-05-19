@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:todo/ui/theme.dart';
 
 import '../../models/task.dart';
+import '../pages/home_page.dart';
 import '../size_config.dart';
 
 class TaskTile extends StatelessWidget {

@@ -8,6 +8,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../controllers/task_controller.dart';
 import '/models/task.dart';
 import '/ui/pages/notification_screen.dart';
 
@@ -106,12 +107,6 @@ class NotifyHelper {
 
     var formattedDate = DateFormat.yMd().parse(date);
     final tz.TZDateTime fd = tz.TZDateTime.from(formattedDate, tz.local);
-    // print('ooooooooooo $fd');
-    // if(fd.isBefore(now)){
-    //   print('endddddddddddddddddd');
-    // }else{
-    //   print('gogogogogogog');
-    // }
 
     tz.TZDateTime scheduledDate =
     tz.TZDateTime(tz.local, fd.year, fd.month, fd.day, hour, minutes);
@@ -229,4 +224,11 @@ class NotifyHelper {
       await Get.to(() => NotificationScreen(payload: payload));
     });
   }
+
+  void checkDate(DateTime selectedDate,int? id){
+    if(!selectedDate.isBefore(DateTime.now())){
+      TaskController().markTaskAsNotCompleted(id!);
+    }
+  }
+
 }

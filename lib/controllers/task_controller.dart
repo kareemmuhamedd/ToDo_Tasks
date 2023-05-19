@@ -35,6 +35,11 @@ class TaskController extends GetxController {
     await DBHelper.update(id);
     getTask();
   }
+
+  void markTaskAsNotCompleted(int id) async {
+    await DBHelper.updateTaskState(id);
+    getTask();
+  }
   // void check(){
   //   for(var i in taskList){
   //     if(DateTime.now()==i.endTime){

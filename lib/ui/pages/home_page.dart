@@ -34,9 +34,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     notifyHelper = NotifyHelper();
     notifyHelper.requestIOSPermissions();
-    // notifyHelper.requestAndroidPermission();
+
+    /// for ios
     notifyHelper.initializeNotification();
     _taskController.getTask();
+    _showTask();
   }
 
   final TaskController _taskController = Get.put(TaskController());
@@ -207,20 +209,9 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
+  
   /// function for refresh indicator
   Future<void> _onRefresh() async {
-    // DateTime now=DateTime.now();
-    // for(var i in _taskController.taskList){
-    //   DateTime date = DateFormat('M/d/yyyy').parse(i.date!);
-    //   if(date.isBefore(now)){
-    //     print('***********i am sorry***********');
-    //   }
-    //   else{
-    //     print('***********you have still time***********');
-    //   }
-    // }
-
     _taskController.getTask();
     _showTask();
   }
@@ -257,7 +248,7 @@ class _HomePageState extends State<HomePage> {
                   // var minutes = task.startTime.toString().split(':')[1];
                   // debugPrint('My time is $hour');
                   // debugPrint('My minutes is $minutes');
-
+                  NotifyHelper().checkDate(_selectedDate, task.id);
                   var date = DateFormat.jm().parse(task.startTime!);
                   var myTime = DateFormat('HH:mm').format(date);
 
